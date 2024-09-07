@@ -16,7 +16,9 @@ export class CustomerController {
   @Serialize(CreateCustomerResponseExample)
   @Post()
   async create(@Body() createCustomerDto: CreateCustomerDto): Promise<Customer> {
-    return this.customerService.create(createCustomerDto);
+    const result = await this.customerService.create(createCustomerDto);
+    console.log(result['_id'],result['_id'].toString())
+    return result
   }
 
   @UseGuards(LocalAuthGuard)

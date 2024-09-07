@@ -1,16 +1,18 @@
-import { Expose } from "class-transformer";
+import { Expose, Transform } from "class-transformer";
+import { ObjectId, Types } from "mongoose";
 
-export class CreateCustomerResponseExample{
+export class CreateCustomerResponseExample {
     @Expose()
-    _id: string;
+    @Transform((params) => params.obj._id.toString())
+    _id: ObjectId;    
     @Expose()
-    name:string;
+    name: string;
     @Expose()
-    email:string;
+    email: string;
     @Expose()
-    phone:string;
+    phone: string;
     @Expose()
-    address:string;
+    address: string;
     @Expose()
-    type:string;
+    type: string;
 }
