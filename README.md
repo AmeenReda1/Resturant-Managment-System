@@ -124,8 +124,9 @@ This data calculated for one time and when you call this api again the result re
 Third, you need to Create Order prvide customerId and productId for each product with the qunatity:
 if you updated order this order orderd today then the redis cache will remove because you need to recalculate the Daily Report
 
-- **URL**: `http://localhost:9000/order`
+- **URL**: `http://localhost:9000/order/66dc7093ac32ac63657c2bb5`
 - **Method**: `Patch`
+- **Param**: `OrderId`
 - **Payload**:
 
   ```json
