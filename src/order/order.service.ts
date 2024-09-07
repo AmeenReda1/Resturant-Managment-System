@@ -47,7 +47,7 @@ export class OrderService {
     const endOfToday = moment().endOf('day').toDate();
     const todayDate: string = this.convertDateToTodayDate();
     const dailyReportData = await this.cacheManager.get(todayDate)
-    
+
     if (dailyReportData) {
       console.log('from cache')
       return dailyReportData
@@ -122,7 +122,7 @@ export class OrderService {
         $sort: { totalQuantity: -1 },
       },
       {
-        $limit: 1,
+        $limit: 2,
       },
       {
         $lookup: {
