@@ -2,7 +2,7 @@
 
 ## Overview
 
-This Restaurant Management System is designed to streamline restaurant operations. developed using Nest.js,MongoDB It allows users to create new customers, log in, and create orders. For admins, it provides daily reports with cached data in Redis to enhance performance. The daily reports include total revenue for the day and the top-selling products.
+This Restaurant Management System is designed to streamline restaurant operations. developed using `Nest.js`,`MongoDB`,`Docker`,`Redis` It allows users to create new customers, log in, and create orders. For admins, it provides daily reports with cached data in Redis to enhance performance. The daily reports include total revenue for the day and the top-selling products.
 
 ## Features
 
