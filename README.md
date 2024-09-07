@@ -1,73 +1,142 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+## Restaurant Management System
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Overview
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This Restaurant Management System is designed to streamline restaurant operations. developed using Nest.js,MongoDB It allows users to create new customers, log in, and create orders. For admins, it provides daily reports with cached data in Redis to enhance performance. The daily reports include total revenue for the day and the top-selling products.
 
-## Description
+## Features
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- **Customer**: Create new customer profiles.
+-**Products**: Create product.
+- **Orders**: Create and manage orders.
+- **Admin Order Reports**: Access daily reports including:
+  - Total revenue for the day.
+  - Top-selling products.
+- **Redis Caching**: Cache daily reports in Redis for efficient retrieval and improved performance.
+## Prerequisites
 
-## Installation
+- **Docker**: Ensure Docker is installed on your machine.
+- **Docker Compose**: Ensure Docker Compose is installed on your machine.
 
-```bash
-$ pnpm install
-```
+## Setup
 
-## Running the app
+1. **Clone the Repository:**
 
-```bash
-# development
-$ pnpm run start
+   ```bash
+   git clone https://github.com/AmeenReda1/Resturant-Managment-System.git
+   cd Resturant-Managment-System
+## add .env file with this data
+  ```bash
+    PORT=9000
+    MONGO_URI=mongodb://mongodb:27017/resturant-db
+    JWT_SECRET='Add-your-secret'
+    JWT_EXPIRE_In=1h
+  ```
+1. **Docker Running**
 
-# watch mode
-$ pnpm run start:dev
+   ```bash
+    docker-compose --build
+    docker-compose up
+3. **Now You can Access endPonits** 
 
-# production mode
-$ pnpm run start:prod
-```
+### 1. Create a New Customer
 
-## Test
+First, you need to create a new customer. You can do this by making a `POST` request to the following endpoint:
 
-```bash
-# unit tests
-$ pnpm run test
+- **URL**: `http://localhost:9000/customers`
+- **Method**: `POST`
+- **Payload**:
 
-# e2e tests
-$ pnpm run test:e2e
+  ```json
+  {
+    "name": "test",
+    "email": "test@gmail.com",
+    "password": "12345678",
+    "phone": "011111111111",
+    "address": "address",
+    "type": "admin" || "customer"
+  }
+### 1. Login
 
-# test coverage
-$ pnpm run test:cov
-```
+Second, you need to Login with admin to create product and see the daily report:
 
-## Support
+- **URL**: `http://localhost:9000/customers/login`
+- **Method**: `POST`
+- **Payload**:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+  ```json
+  {
+    "email": "test@gmail.com",
+    "password": "12345678",
+  }
 
-## Stay in touch
+### 3. Product
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Third, you need to Create Product with admin get token from login and use it:
 
-## License
+- **URL**: `http://localhost:9000/products`
+- **Method**: `POST`
+- **Bearer token**: `Admin Token`
+- **Payload**:
 
-Nest is [MIT licensed](LICENSE).
+  ```json
+  {
+      "name":"burger",
+      "price":500
+  }
+
+### 3. Order
+
+Third, you need to Create Order prvide customerId and productId for each product with the qunatity:
+
+- **URL**: `http://localhost:9000/order`
+- **Method**: `POST`
+- **Payload**:
+
+  ```json
+  {
+      "customerId":"66dc7089ac32ac63658b2bb1",
+      "products":[
+          {
+              "productId":"66dc7093ac32ac63658b2bb6",
+              "quantity":100
+          },
+          {
+              "productId":"66dc7093ac32ac63657c2bb5",
+              "quantity":2
+          },
+
+      ]
+
+  }
+### 3.1. DailyReport
+
+you need to login as admin and use your token to access this endpoint  with the qunatity:
+This data calculated for one time and when you call this api again the result retrived from Redis 
+
+- **URL**: `http://localhost:9000/order`
+- **Method**: `GET`
+- **Bearer token**: `Admin Token`
+
+
+### 3. Update Specific Order
+
+Third, you need to Create Order prvide customerId and productId for each product with the qunatity:
+if you updated order this order orderd today then the redis cache will remove because you need to recalculate the Daily Report
+
+- **URL**: `http://localhost:9000/order`
+- **Method**: `Patch`
+- **Payload**:
+
+  ```json
+  {
+      //"customerId":"66db2d56328230272495b67a",
+      "products":[
+          {
+              "productId":"66db02a6d7eb5f5ff4907eb8",
+              "quantity":20
+          }
+
+      ]
+
+  }
