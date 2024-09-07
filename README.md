@@ -7,7 +7,7 @@ This Restaurant Management System is designed to streamline restaurant operation
 ## Features
 
 - **Customer**: Create new customer profiles.
--**Products**: Create product.
+- **Products**: Create product.
 - **Orders**: Create and manage orders.
 - **Admin Order Reports**: Access daily reports including:
   - Total revenue for the day.
