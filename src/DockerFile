@@ -1,0 +1,22 @@
+# Use the official Node.js 20 image as the base image
+FROM node:20
+
+# Set the working directory inside the container
+WORKDIR /home/node/app
+
+# Install nest cli globally
+RUN npm install -g @nestjs/cli
+
+# Install pnpm globally and dependencies
+RUN npm install -g pnpm
+COPY package.json pnpm-lock.yaml* ./
+RUN pnpm install --force
+
+# Copy the rest of the application code
+COPY . .
+
+# Expose the port on which your NestJS app runs
+EXPOSE 9000
+
+# Build and start the NestJS app
+CMD ["pnpm", "run", "start:dev"]
